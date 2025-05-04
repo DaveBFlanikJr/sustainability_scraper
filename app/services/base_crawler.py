@@ -1,5 +1,5 @@
-from services.playwright_engine import PlaywrightEngine
-from app.api.schemas import CrawlRequest, CrawlResponse
+from app.services.playwrite_engine import PlaywrightEngine
+from app.api.schema import CrawlRequest, CrawlResponse
 
 
 class Crawler:

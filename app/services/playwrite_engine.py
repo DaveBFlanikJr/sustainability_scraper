@@ -15,6 +15,11 @@ class PlaywrightEngine:
     # navigate
     async def navigate(self, url) -> None:
         await self.page.goto(url)
+
+        # await self.page.wait_for_timeout(5000)
+        # html = await self.page.content()
+        # with open("debug.html", "w", encoding="utf-8") as f:
+        #     f.write(html)
     # click
     async def click(self, selector: str) -> None:
         await self.page.click(selector)

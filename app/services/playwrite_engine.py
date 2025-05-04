@@ -13,19 +13,19 @@ class PlaywrightEngine:
         self.browser = await self.playwrite.chromium.launch(headless=self.headless)
         self.page = await self.browser.new_page()
     # navigate
-    async def navigate(self, url):
+    async def navigate(self, url) -> None:
         await self.page.goto(url)
     # click
-    async def click(self, selector: str):
+    async def click(self, selector: str) -> None:
         await self.page.click(selector)
     # type
-    async def type(self, selector: str, value):
+    async def type(self, selector: str, value) -> None:
         await self.page.fill(selector, value)
     # select
-    async def select(self, selector: str, value: str):
+    async def select(self, selector: str, value: str) -> None:
         await self.page.select_option(selector, value)
     # wait for the value
-    async def wait(self, wait_for: str | int):
+    async def wait(self, wait_for: str | int) -> None:
         if isinstance(wait_for, int):
             await self.page.wait_for_timeout(wait_for)
         if isinstance(wait_for, str):
@@ -41,6 +41,7 @@ class PlaywrightEngine:
                 results[key] = text
             except Exception:
                 results[key] = None
+        return results
 
     async def stop(self):
         await self.browser.close()

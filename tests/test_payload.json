@@ -1,0 +1,9 @@
+{
+  "site_id": "gots_supplier_db",
+  "inputs": {
+    "supplier_id": "00159674",
+    "country": "Japan",
+    "field_of_operation": "Manufacturing",
+    "product_category": "Accessories"
+  }
+}

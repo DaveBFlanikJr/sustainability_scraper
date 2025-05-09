@@ -2,7 +2,7 @@ from playwright.async_api import async_playwright
 
 
 class PlaywrightEngine:
-    def __init__(self, headless: bool = True):
+    def __init__(self, headless: bool = False):
         self.playwrite = None
         self.browser = None
         self.page = None
@@ -41,11 +41,19 @@ class PlaywrightEngine:
 
         for key, selector in extract_map.items():
             try:
-                htmlelement = await self.page.query_selector(selector)
-                text = await htmlelement.inner_text() if htmlelement else None
-                results[key] = text
+                await self.page.wait_for_selector(selector, timeout=15000)
+                htmlelements = await self.page.query_selector_all(selector)
+                if htmlelements:
+                    text_list = []
+                    for el in htmlelements:
+                        text = await el.inner_text()
+                        text_list.append(text.strip())
+
+                    results[key] = text_list
+                else:
+                    results[key] = []
             except Exception:
-                results[key] = None
+                results[key] = []
         return results
 
     async def stop(self):

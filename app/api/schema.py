@@ -8,11 +8,17 @@ class Action(BaseModel):
     wait: Optional[Union[str,int]] = None
 
 class CrawlRequest(BaseModel):
-    url: str
-    actions: List[Action]
-    extract: Dict[str,str]
+    url: Optional[str] = None
+    actions: Optional[List[Action]] = []
+    extract: Optional[Dict[str, str]] = {}
+
+    # For site profile mode
+    site_id: Optional[str] = None
+    inputs: Optional[Dict[str, str]] = {}
 
 class CrawlResponse(BaseModel):
     success: bool
     data: Dict[str, Any]
     error: Optional[str] = None
+    site_id: Optional[str] = None
+    inputs: Optional[Dict[str, str]] = {}

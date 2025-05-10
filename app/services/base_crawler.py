@@ -14,7 +14,7 @@ class Crawler:
             self.profile = loader(config.site_id)
             self.url = self.profile["url"]
             self.actions = build_actions(self.profile, config.inputs or {})
-            self.extract = { "results": self.profile["extract"]["row_selector"] }
+            self.extract = self.profile["extract"]
         else:
             self.url = config.url
             self.actions = config.actions

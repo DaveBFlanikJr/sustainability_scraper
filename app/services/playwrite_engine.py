@@ -39,7 +39,8 @@ class PlaywrightEngine:
     async def extract(self, extract_map: dict) -> dict:
         results = {}
 
-        for key, selector in extract_map.items():
+        # Normal table results
+        for key, selector in extract_map.get("fields", {}).items():
             try:
                 await self.page.wait_for_selector(selector, timeout=15000)
                 htmlelements = await self.page.query_selector_all(selector)
@@ -54,6 +55,22 @@ class PlaywrightEngine:
                     results[key] = []
             except Exception:
                 results[key] = []
+
+        # Additional popup fields
+       # Popup-specific fields (single values per key)
+        popup_fields = extract_map.get("popup_fields", {})
+        for key, selector in popup_fields.items():
+            try:
+                print(f"[extract:popup_fields] Trying to extract: {key} from selector: {selector}")
+                await self.page.wait_for_selector(selector, timeout=5000)
+                el = await self.page.query_selector(selector)
+                text = await el.inner_text() if el else ""
+                cleaned = text.split(":", 1)[-1].strip()
+                results[key] = cleaned
+            except Exception:
+                results[key] = ""
+
+
         return results
 
     async def stop(self):
